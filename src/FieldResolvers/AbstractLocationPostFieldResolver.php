@@ -47,28 +47,6 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
         return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($typeResolver, $fieldName);
     }
 
-    public function getSchemaFieldArgs(TypeResolverInterface $typeResolver, string $fieldName): array
-    {
-        $schemaFieldArgs = parent::getSchemaFieldArgs($typeResolver, $fieldName);
-        switch ($fieldName) {
-            case 'locationposts':
-                return array_merge(
-                    $schemaFieldArgs,
-                    $this->getFieldArgumentsSchemaDefinitions($typeResolver, $fieldName)
-                );
-        }
-        return $schemaFieldArgs;
-    }
-
-    public function enableOrderedSchemaFieldArgs(TypeResolverInterface $typeResolver, string $fieldName): bool
-    {
-        switch ($fieldName) {
-            case 'locationposts':
-                return false;
-        }
-        return parent::enableOrderedSchemaFieldArgs($typeResolver, $fieldName);
-    }
-
     /**
      * @param array<string, mixed> $fieldArgs
      * @return array<string, mixed>
@@ -110,10 +88,12 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
         switch ($fieldName) {
             case 'locationposts':
                 $query = $this->getQuery($typeResolver, $resultItem, $fieldName, $fieldArgs);
-                $options = [
-                    'return-type' => ReturnTypes::IDS,
-                ];
-                $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
+                $options = array_merge(
+                    [
+                        'return-type' => ReturnTypes::IDS,
+                    ],
+                    $this->getFilterDataloadQueryArgsOptions($typeResolver, $fieldName, $fieldArgs)
+                );
                 return $locationPostTypeAPI->getLocationPosts($query, $options);
         }
 
