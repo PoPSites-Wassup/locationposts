@@ -22,7 +22,8 @@ interface LocationPostTypeAPIInterface
      */
     public function locationPostExists(int | string $id): bool;
     /**
-     * Get the locationPost with provided ID or, if it doesn't exist, null
+     * Get the locationPost with provided ID or, if it doesn't exist, null.
+     * If param "status" in $query is not passed, it defaults to "publish"
      */
     public function getLocationPosts(array $query, array $options = []): array;
 }
