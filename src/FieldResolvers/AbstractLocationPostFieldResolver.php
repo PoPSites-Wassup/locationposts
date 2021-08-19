@@ -84,14 +84,11 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
         $locationPostTypeAPI = LocationPostTypeAPIFacade::getInstance();
         switch ($fieldName) {
             case 'locationposts':
-                $query = $this->getQuery($typeResolver, $resultItem, $fieldName, $fieldArgs);
-                $options = array_merge(
-                    [
-                        'return-type' => ReturnTypes::IDS,
-                    ],
-                    $this->getFilterDataloadQueryArgsOptions($typeResolver, $fieldName, $fieldArgs)
+                $query = array_merge(
+                    $this->convertFieldArgsToFilteringQueryArgs($typeResolver, $fieldName, $fieldArgs),
+                    $this->getQuery($typeResolver, $resultItem, $fieldName, $fieldArgs)
                 );
-                return $locationPostTypeAPI->getLocationPosts($query, $options);
+                return $locationPostTypeAPI->getLocationPosts($query, ['return-type' => ReturnTypes::IDS]);
         }
 
         return parent::resolveValue($typeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
