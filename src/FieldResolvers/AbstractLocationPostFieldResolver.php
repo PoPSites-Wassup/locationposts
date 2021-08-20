@@ -8,11 +8,11 @@ use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
 use PoP\ComponentModel\Schema\SchemaDefinition;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
-use PoPSchema\CustomPosts\Types\Status;
 use PoPSchema\LocationPosts\ComponentConfiguration;
 use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
 use PoPSchema\LocationPosts\TypeResolvers\LocationPostTypeResolver;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
+use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
 abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldResolver
 {
@@ -88,7 +88,7 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
                     $this->convertFieldArgsToFilteringQueryArgs($typeResolver, $fieldName, $fieldArgs),
                     $this->getQuery($typeResolver, $resultItem, $fieldName, $fieldArgs)
                 );
-                return $locationPostTypeAPI->getLocationPosts($query, ['return-type' => ReturnTypes::IDS]);
+                return $locationPostTypeAPI->getLocationPosts($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS]);
         }
 
         return parent::resolveValue($typeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);

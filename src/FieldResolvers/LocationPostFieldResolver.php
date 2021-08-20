@@ -12,6 +12,7 @@ use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
 use PoPSchema\LocationPosts\TypeResolvers\LocationPostTypeResolver;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 use PoPSchema\Taxonomies\Facades\TaxonomyTypeAPIFacade;
+use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
 class LocationPostFieldResolver extends AbstractDBDataFieldResolver
 {
@@ -80,7 +81,7 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
                     $typeResolver->getID($locationpost),
                     POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
                     [
-                        'return-type' => ReturnTypes::IDS,
+                        QueryOptions::RETURN_TYPE => ReturnTypes::IDS,
                     ]
                 );
 
@@ -89,7 +90,7 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
                     $typeResolver->getID($locationpost),
                     POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
                     [
-                        'return-type' => ReturnTypes::SLUGS,
+                        QueryOptions::RETURN_TYPE => ReturnTypes::SLUGS,
                     ]
                 );
 
