@@ -9,14 +9,7 @@ use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
 
 class LocationPostTypeDataLoader extends PostTypeDataLoader
 {
-    public function getObjects(array $ids): array
-    {
-        $locationPostTypeAPI = LocationPostTypeAPIFacade::getInstance();
-        $query = $this->getObjectQuery($ids);
-        return (array)$locationPostTypeAPI->getLocationPosts($query);
-    }
-
-    public function executeQuery($query, array $options = [])
+    public function executeQuery($query, array $options = []): array
     {
         $locationPostTypeAPI = LocationPostTypeAPIFacade::getInstance();
         return $locationPostTypeAPI->getLocationPosts($query, $options);
