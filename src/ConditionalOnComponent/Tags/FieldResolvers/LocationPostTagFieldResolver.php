@@ -7,7 +7,7 @@ namespace PoPSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers;
 use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
 
-// use PoPSchema\LocationTags\TypeResolvers\LocationTagTypeResolver;
+// use PoPSchema\LocationTags\TypeResolvers\Object\LocationTagTypeResolver;
 
 /**
  * Fields for event tags

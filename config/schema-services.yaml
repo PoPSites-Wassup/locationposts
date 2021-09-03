@@ -6,8 +6,8 @@ services:
     PoPSchema\LocationPosts\FieldResolvers\:
         resource: '../src/FieldResolvers/*'
 
-    PoPSchema\LocationPosts\TypeResolverPickers\:
-        resource: '../src/TypeResolverPickers/*'
+    PoPSchema\LocationPosts\ObjectTypeResolverPickers\:
+        resource: '../src/ObjectTypeResolverPickers/*'
 
     PoPSchema\LocationPosts\TypeResolvers\:
         resource: '../src/TypeResolvers/*'

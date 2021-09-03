@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PoPSchema\LocationPosts\FieldResolvers;
 
 use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
-use PoP\Engine\TypeResolvers\RootTypeResolver;
+use PoP\Engine\TypeResolvers\Object\RootTypeResolver;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
 
 class RootLocationPostFieldResolver extends AbstractLocationPostFieldResolver

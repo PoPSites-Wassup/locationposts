@@ -6,7 +6,7 @@ namespace PoPSchema\LocationPosts\ConditionalOnComponent\Users\FieldResolvers;
 
 use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
-use PoPSchema\Users\TypeResolvers\UserTypeResolver;
+use PoPSchema\Users\TypeResolvers\Object\UserTypeResolver;
 
 class LocationPostUserFieldResolver extends AbstractLocationPostFieldResolver
 {

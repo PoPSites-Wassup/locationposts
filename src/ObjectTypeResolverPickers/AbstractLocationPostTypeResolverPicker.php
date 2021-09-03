@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\TypeResolverPickers;
+namespace PoPSchema\LocationPosts\ObjectTypeResolverPickers;
 
 use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
-use PoPSchema\LocationPosts\TypeResolvers\LocationPostTypeResolver;
-use PoP\ComponentModel\TypeResolverPickers\AbstractObjectTypeResolverPicker;
+use PoPSchema\LocationPosts\TypeResolvers\Object\LocationPostTypeResolver;
+use PoP\ComponentModel\ObjectTypeResolverPickers\AbstractObjectTypeResolverPicker;
 
 class AbstractLocationPostTypeResolverPicker extends AbstractObjectTypeResolverPicker
 {

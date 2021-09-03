@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\TypeResolvers;
+namespace PoPSchema\LocationPosts\TypeResolvers\Object;
 
 use PoPSchema\LocationPosts\Environment;
-use PoPSchema\Posts\TypeResolvers\PostTypeResolver;
+use PoPSchema\Posts\TypeResolvers\Object\PostTypeResolver;
 use PoPSchema\LocationPosts\TypeDataLoaders\LocationPostTypeDataLoader;
 
 class LocationPostTypeResolver extends PostTypeResolver
