@@ -25,7 +25,7 @@ class LocationPostTypeResolver extends PostTypeResolver
         return $this->translationAPI->__('A post which has locations', 'locationposts');
     }
 
-    public function getTypeDataLoaderClass(): string
+    public function getRelationalTypeDataLoaderClass(): string
     {
         return LocationPostTypeDataLoader::class;
     }

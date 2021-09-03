@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers;
 
-use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
+use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
 
 // use PoPSchema\LocationTags\TypeResolvers\LocationTagTypeResolver;
@@ -22,12 +22,12 @@ abstract class LocationPostTagFieldResolver extends AbstractLocationPostFieldRes
     //     return array(LocationTagTypeResolver::class);
     // }
 
-    public function getSchemaFieldDescription(TypeResolverInterface $typeResolver, string $fieldName): ?string
+    public function getSchemaFieldDescription(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?string
     {
         $descriptions = [
             'locationposts' => $this->translationAPI->__('Location Posts which contain this tag', 'locationposts'),
         ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($typeResolver, $fieldName);
+        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($relationalTypeResolver, $fieldName);
     }
 
     /**
@@ -35,18 +35,18 @@ abstract class LocationPostTagFieldResolver extends AbstractLocationPostFieldRes
      * @return array<string, mixed>
      */
     protected function getQuery(
-        TypeResolverInterface $typeResolver,
+        RelationalTypeResolverInterface $relationalTypeResolver,
         object $resultItem,
         string $fieldName,
         array $fieldArgs = []
     ): array {
 
-        $query = parent::getQuery($typeResolver, $resultItem, $fieldName, $fieldArgs);
+        $query = parent::getQuery($relationalTypeResolver, $resultItem, $fieldName, $fieldArgs);
 
         $tag = $resultItem;
         switch ($fieldName) {
             case 'locationposts':
-                $query['tag-ids'] = [$typeResolver->getID($tag)];
+                $query['tag-ids'] = [$relationalTypeResolver->getID($tag)];
                 break;
         }
 

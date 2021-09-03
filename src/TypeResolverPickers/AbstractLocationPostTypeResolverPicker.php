@@ -6,11 +6,11 @@ namespace PoPSchema\LocationPosts\TypeResolverPickers;
 
 use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
 use PoPSchema\LocationPosts\TypeResolvers\LocationPostTypeResolver;
-use PoP\ComponentModel\TypeResolverPickers\AbstractTypeResolverPicker;
+use PoP\ComponentModel\TypeResolverPickers\AbstractObjectTypeResolverPicker;
 
-class AbstractLocationPostTypeResolverPicker extends AbstractTypeResolverPicker
+class AbstractLocationPostTypeResolverPicker extends AbstractObjectTypeResolverPicker
 {
-    public function getTypeResolverClass(): string
+    public function getObjectTypeResolverClass(): string
     {
         return LocationPostTypeResolver::class;
     }
