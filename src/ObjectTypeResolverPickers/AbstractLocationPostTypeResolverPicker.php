@@ -8,7 +8,7 @@ use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
 use PoPSchema\LocationPosts\TypeResolvers\Object\LocationPostTypeResolver;
 use PoP\ComponentModel\ObjectTypeResolverPickers\AbstractObjectTypeResolverPicker;
 
-class AbstractLocationPostTypeResolverPicker extends AbstractObjectTypeResolverPicker
+abstract class AbstractLocationPostTypeResolverPicker extends AbstractObjectTypeResolverPicker
 {
     public function getObjectTypeResolverClass(): string
     {
