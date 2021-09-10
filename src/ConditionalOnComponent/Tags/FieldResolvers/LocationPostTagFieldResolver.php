@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers;
 
-use PoP\ComponentModel\TypeResolvers\Object\ObjectTypeResolverInterface;
+use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
 
-// use PoPSchema\LocationTags\TypeResolvers\Object\LocationTagTypeResolver;
+// use PoPSchema\LocationTags\TypeResolvers\ObjectType\LocationTagTypeResolver;
 
 /**
  * Fields for event tags

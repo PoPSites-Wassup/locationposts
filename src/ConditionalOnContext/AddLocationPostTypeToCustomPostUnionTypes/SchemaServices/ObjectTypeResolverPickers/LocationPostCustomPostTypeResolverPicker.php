@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\ConditionalOnContext\AddLocationPostTypeToCustomPostUnionTypes\SchemaServices\ObjectTypeResolverPickers;
 
-use PoPSchema\CustomPosts\TypeResolvers\Union\CustomPostUnionTypeResolver;
+use PoPSchema\CustomPosts\TypeResolvers\UnionType\CustomPostUnionTypeResolver;
 use PoPSchema\LocationPosts\ObjectTypeResolverPickers\AbstractLocationPostTypeResolverPicker;
 
 class LocationPostCustomPostTypeResolverPicker extends AbstractLocationPostTypeResolverPicker

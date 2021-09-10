@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\ConditionalOnComponent\Users\FieldResolvers;
 
-use PoP\ComponentModel\TypeResolvers\Object\ObjectTypeResolverInterface;
+use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
-use PoPSchema\Users\TypeResolvers\Object\UserTypeResolver;
+use PoPSchema\Users\TypeResolvers\ObjectType\UserTypeResolver;
 
 class LocationPostUserFieldResolver extends AbstractLocationPostFieldResolver
 {
