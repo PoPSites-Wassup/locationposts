@@ -8,7 +8,7 @@ use PoP\ComponentModel\FieldResolvers\AbstractDBDataFieldResolver;
 use PoP\ComponentModel\Misc\GeneralUtils;
 use PoP\ComponentModel\Schema\SchemaDefinition;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
-use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
+use PoP\ComponentModel\TypeResolvers\Object\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\TypeResolvers\Object\LocationPostTypeResolver;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 use PoPSchema\Taxonomies\Facades\TaxonomyTypeAPIFacade;
@@ -16,9 +16,11 @@ use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
 class LocationPostFieldResolver extends AbstractDBDataFieldResolver
 {
-    public function getClassesToAttachTo(): array
+    public function getObjectTypeResolverClassesToAttachTo(): array
     {
-        return array(LocationPostTypeResolver::class);
+        return [
+            LocationPostTypeResolver::class,
+        ];
     }
 
     public function getFieldNamesToResolve(): array
@@ -30,31 +32,31 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
         ];
     }
 
-    public function getSchemaFieldType(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): string
+    public function getSchemaFieldType(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): string
     {
         return match ($fieldName) {
             'catSlugs' => SchemaDefinition::TYPE_STRING,
             'catName' => SchemaDefinition::TYPE_STRING,
-            default => parent::getSchemaFieldType($relationalTypeResolver, $fieldName),
+            default => parent::getSchemaFieldType($objectTypeResolver, $fieldName),
         };
     }
 
-    public function getSchemaFieldTypeModifiers(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?int
+    public function getSchemaFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?int
     {
         return match ($fieldName) {
             'categories', 'catSlugs' => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY,
-            default => parent::getSchemaFieldTypeModifiers($relationalTypeResolver, $fieldName),
+            default => parent::getSchemaFieldTypeModifiers($objectTypeResolver, $fieldName),
         };
     }
 
-    public function getSchemaFieldDescription(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?string
+    public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         $descriptions = [
             'categories' => $this->translationAPI->__('', ''),
             'catSlugs' => $this->translationAPI->__('', ''),
             'catName' => $this->translationAPI->__('', ''),
         ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($relationalTypeResolver, $fieldName);
+        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
     }
 
     /**
@@ -64,7 +66,7 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
      * @param array<string, mixed> $options
      */
     public function resolveValue(
-        RelationalTypeResolverInterface $relationalTypeResolver,
+        ObjectTypeResolverInterface $objectTypeResolver,
         object $resultItem,
         string $fieldName,
         array $fieldArgs = [],
@@ -77,7 +79,7 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
         switch ($fieldName) {
             case 'categories':
                 return $taxonomyapi->getCustomPostTaxonomyTerms(
-                    $relationalTypeResolver->getID($locationpost),
+                    $objectTypeResolver->getID($locationpost),
                     POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
                     [
                         QueryOptions::RETURN_TYPE => ReturnTypes::IDS,
@@ -86,7 +88,7 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
 
             case 'catSlugs':
                 return $taxonomyapi->getCustomPostTaxonomyTerms(
-                    $relationalTypeResolver->getID($locationpost),
+                    $objectTypeResolver->getID($locationpost),
                     POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
                     [
                         QueryOptions::RETURN_TYPE => ReturnTypes::SLUGS,
@@ -94,7 +96,7 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
                 );
 
             case 'catName':
-                $cat = $relationalTypeResolver->resolveValue($resultItem, 'mainCategory', $variables, $expressions, $options);
+                $cat = $objectTypeResolver->resolveValue($resultItem, 'mainCategory', $variables, $expressions, $options);
                 if (GeneralUtils::isError($cat)) {
                     return $cat;
                 } elseif ($cat) {
@@ -103,6 +105,6 @@ class LocationPostFieldResolver extends AbstractDBDataFieldResolver
                 return null;
         }
 
-        return parent::resolveValue($relationalTypeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
+        return parent::resolveValue($objectTypeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
     }
 }

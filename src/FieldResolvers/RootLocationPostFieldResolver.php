@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\FieldResolvers;
 
-use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
+use PoP\ComponentModel\TypeResolvers\Object\ObjectTypeResolverInterface;
 use PoP\Engine\TypeResolvers\Object\RootTypeResolver;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
 
 class RootLocationPostFieldResolver extends AbstractLocationPostFieldResolver
 {
-    public function getClassesToAttachTo(): array
+    public function getObjectTypeResolverClassesToAttachTo(): array
     {
-        return array(RootTypeResolver::class);
+        return [
+            RootTypeResolver::class,
+        ];
     }
 
-    public function getSchemaFieldDescription(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?string
+    public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         $descriptions = [
             'posts' => $this->translationAPI->__('Location Posts in the current site', 'locationposts'),
         ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($relationalTypeResolver, $fieldName);
+        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
     }
 }

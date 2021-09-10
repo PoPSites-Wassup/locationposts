@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers;
 
-use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
+use PoP\ComponentModel\TypeResolvers\Object\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
 
 // use PoPSchema\LocationTags\TypeResolvers\Object\LocationTagTypeResolver;
@@ -17,17 +17,17 @@ use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
  */
 abstract class LocationPostTagFieldResolver extends AbstractLocationPostFieldResolver
 {
-    // public function getClassesToAttachTo(): array
+    // public function getObjectTypeResolverClassesToAttachTo(): array
     // {
     //     return array(LocationTagTypeResolver::class);
     // }
 
-    public function getSchemaFieldDescription(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?string
+    public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         $descriptions = [
             'locationposts' => $this->translationAPI->__('Location Posts which contain this tag', 'locationposts'),
         ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($relationalTypeResolver, $fieldName);
+        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
     }
 
     /**
@@ -35,18 +35,18 @@ abstract class LocationPostTagFieldResolver extends AbstractLocationPostFieldRes
      * @return array<string, mixed>
      */
     protected function getQuery(
-        RelationalTypeResolverInterface $relationalTypeResolver,
+        ObjectTypeResolverInterface $objectTypeResolver,
         object $resultItem,
         string $fieldName,
         array $fieldArgs = []
     ): array {
 
-        $query = parent::getQuery($relationalTypeResolver, $resultItem, $fieldName, $fieldArgs);
+        $query = parent::getQuery($objectTypeResolver, $resultItem, $fieldName, $fieldArgs);
 
         $tag = $resultItem;
         switch ($fieldName) {
             case 'locationposts':
-                $query['tag-ids'] = [$relationalTypeResolver->getID($tag)];
+                $query['tag-ids'] = [$objectTypeResolver->getID($tag)];
                 break;
         }
 

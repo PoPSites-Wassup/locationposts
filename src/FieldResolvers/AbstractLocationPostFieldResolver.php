@@ -6,7 +6,7 @@ namespace PoPSchema\LocationPosts\FieldResolvers;
 
 use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
-use PoP\ComponentModel\TypeResolvers\RelationalTypeResolverInterface;
+use PoP\ComponentModel\TypeResolvers\Object\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\ComponentConfiguration;
 use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
 use PoPSchema\LocationPosts\TypeResolvers\Object\LocationPostTypeResolver;
@@ -22,20 +22,20 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
         ];
     }
 
-    public function getSchemaFieldTypeModifiers(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?int
+    public function getSchemaFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?int
     {
         return match ($fieldName) {
             'locationposts' => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY,
-            default => parent::getSchemaFieldTypeModifiers($relationalTypeResolver, $fieldName),
+            default => parent::getSchemaFieldTypeModifiers($objectTypeResolver, $fieldName),
         };
     }
 
-    public function getSchemaFieldDescription(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?string
+    public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         $descriptions = [
             'locationposts' => $this->translationAPI->__('Location Posts', 'locationposts'),
         ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($relationalTypeResolver, $fieldName);
+        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
      * @return array<string, mixed>
      */
     protected function getQuery(
-        RelationalTypeResolverInterface $relationalTypeResolver,
+        ObjectTypeResolverInterface $objectTypeResolver,
         object $resultItem,
         string $fieldName,
         array $fieldArgs = []
@@ -64,7 +64,7 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
      * @param array<string, mixed> $options
      */
     public function resolveValue(
-        RelationalTypeResolverInterface $relationalTypeResolver,
+        ObjectTypeResolverInterface $objectTypeResolver,
         object $resultItem,
         string $fieldName,
         array $fieldArgs = [],
@@ -76,22 +76,22 @@ abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldR
         switch ($fieldName) {
             case 'locationposts':
                 $query = array_merge(
-                    $this->convertFieldArgsToFilteringQueryArgs($relationalTypeResolver, $fieldName, $fieldArgs),
-                    $this->getQuery($relationalTypeResolver, $resultItem, $fieldName, $fieldArgs)
+                    $this->convertFieldArgsToFilteringQueryArgs($objectTypeResolver, $fieldName, $fieldArgs),
+                    $this->getQuery($objectTypeResolver, $resultItem, $fieldName, $fieldArgs)
                 );
                 return $locationPostTypeAPI->getLocationPosts($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS]);
         }
 
-        return parent::resolveValue($relationalTypeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
+        return parent::resolveValue($objectTypeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
     }
 
-    public function getFieldTypeResolverClass(RelationalTypeResolverInterface $relationalTypeResolver, string $fieldName): ?string
+    public function getFieldTypeResolverClass(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         switch ($fieldName) {
             case 'locationposts':
                 return LocationPostTypeResolver::class;
         }
 
-        return parent::getFieldTypeResolverClass($relationalTypeResolver, $fieldName);
+        return parent::getFieldTypeResolverClass($objectTypeResolver, $fieldName);
     }
 }
