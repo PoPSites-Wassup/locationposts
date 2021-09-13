@@ -6,9 +6,9 @@ namespace PoPSchema\LocationPosts\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\Engine\TypeResolvers\ObjectType\RootTypeResolver;
-use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostFieldResolver;
+use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostObjectTypeFieldResolver;
 
-class RootLocationPostFieldResolver extends AbstractLocationPostFieldResolver
+class RootLocationPostObjectTypeFieldResolver extends AbstractLocationPostObjectTypeFieldResolver
 {
     public function getObjectTypeResolverClassesToAttachTo(): array
     {

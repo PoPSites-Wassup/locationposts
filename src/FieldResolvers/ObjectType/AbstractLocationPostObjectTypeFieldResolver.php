@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\FieldResolvers\ObjectType;
 
-use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableFieldResolver;
+use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\ComponentConfiguration;
@@ -13,7 +13,7 @@ use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostTypeResolver;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
-abstract class AbstractLocationPostFieldResolver extends AbstractQueryableFieldResolver
+abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolver
 {
     public function getFieldNamesToResolve(): array
     {

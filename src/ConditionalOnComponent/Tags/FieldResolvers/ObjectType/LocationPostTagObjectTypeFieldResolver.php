@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PoPSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostFieldResolver;
+use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostObjectTypeFieldResolver;
 
 // use PoPSchema\LocationTags\TypeResolvers\ObjectType\LocationTagTypeResolver;
 
@@ -15,7 +15,7 @@ use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostFieldR
  * @author Leonardo Losoviz <leo@getpop.org>
  * @todo Create LocationTagTypeResolver class, then remove abstract
  */
-abstract class LocationPostTagFieldResolver extends AbstractLocationPostFieldResolver
+abstract class LocationPostTagObjectTypeFieldResolver extends AbstractLocationPostObjectTypeFieldResolver
 {
     // public function getObjectTypeResolverClassesToAttachTo(): array
     // {
