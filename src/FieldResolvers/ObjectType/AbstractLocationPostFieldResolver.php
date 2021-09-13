@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\FieldResolvers;
+namespace PoPSchema\LocationPosts\FieldResolvers\ObjectType;
 
-use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
+use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\ComponentConfiguration;

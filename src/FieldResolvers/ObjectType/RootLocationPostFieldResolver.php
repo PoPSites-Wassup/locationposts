@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\FieldResolvers;
+namespace PoPSchema\LocationPosts\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\Engine\TypeResolvers\ObjectType\RootTypeResolver;
-use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
+use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostFieldResolver;
 
 class RootLocationPostFieldResolver extends AbstractLocationPostFieldResolver
 {

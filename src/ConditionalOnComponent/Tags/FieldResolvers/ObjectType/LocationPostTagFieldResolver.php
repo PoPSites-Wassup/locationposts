@@ -2,25 +2,30 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\ConditionalOnComponent\Users\FieldResolvers;
+namespace PoPSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPSchema\LocationPosts\FieldResolvers\AbstractLocationPostFieldResolver;
-use PoPSchema\Users\TypeResolvers\ObjectType\UserTypeResolver;
+use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostFieldResolver;
 
-class LocationPostUserFieldResolver extends AbstractLocationPostFieldResolver
+// use PoPSchema\LocationTags\TypeResolvers\ObjectType\LocationTagTypeResolver;
+
+/**
+ * Fields for event tags
+ *
+ * @author Leonardo Losoviz <leo@getpop.org>
+ * @todo Create LocationTagTypeResolver class, then remove abstract
+ */
+abstract class LocationPostTagFieldResolver extends AbstractLocationPostFieldResolver
 {
-    public function getObjectTypeResolverClassesToAttachTo(): array
-    {
-        return [
-            UserTypeResolver::class,
-        ];
-    }
+    // public function getObjectTypeResolverClassesToAttachTo(): array
+    // {
+    //     return array(LocationTagTypeResolver::class);
+    // }
 
     public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         $descriptions = [
-            'locationposts' => $this->translationAPI->__('Location Posts by the user', 'locationposts'),
+            'locationposts' => $this->translationAPI->__('Location Posts which contain this tag', 'locationposts'),
         ];
         return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
     }
@@ -38,10 +43,10 @@ class LocationPostUserFieldResolver extends AbstractLocationPostFieldResolver
 
         $query = parent::getQuery($objectTypeResolver, $resultItem, $fieldName, $fieldArgs);
 
-        $user = $resultItem;
+        $tag = $resultItem;
         switch ($fieldName) {
             case 'locationposts':
-                $query['authors'] = [$objectTypeResolver->getID($user)];
+                $query['tag-ids'] = [$objectTypeResolver->getID($tag)];
                 break;
         }
 
