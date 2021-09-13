@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace PoPSchema\LocationPosts\ObjectTypeResolverPickers;
 
 use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
-use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostTypeResolver;
+use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
 use PoP\ComponentModel\ObjectTypeResolverPickers\AbstractObjectTypeResolverPicker;
 
 abstract class AbstractLocationPostTypeResolverPicker extends AbstractObjectTypeResolverPicker
 {
     public function getObjectTypeResolverClass(): string
     {
-        return LocationPostTypeResolver::class;
+        return LocationPostObjectTypeResolver::class;
     }
 
     public function isInstanceOfType(object $object): bool

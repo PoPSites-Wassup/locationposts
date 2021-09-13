@@ -9,7 +9,7 @@ use PoP\ComponentModel\Misc\GeneralUtils;
 use PoP\ComponentModel\Schema\SchemaDefinition;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostTypeResolver;
+use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 use PoPSchema\Taxonomies\Facades\TaxonomyTypeAPIFacade;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
@@ -19,7 +19,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [
-            LocationPostTypeResolver::class,
+            LocationPostObjectTypeResolver::class,
         ];
     }
 

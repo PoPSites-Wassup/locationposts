@@ -9,7 +9,7 @@ use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoPSchema\LocationPosts\ComponentConfiguration;
 use PoPSchema\LocationPosts\Facades\LocationPostTypeAPIFacade;
-use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostTypeResolver;
+use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
@@ -89,7 +89,7 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     {
         switch ($fieldName) {
             case 'locationposts':
-                return LocationPostTypeResolver::class;
+                return LocationPostObjectTypeResolver::class;
         }
 
         return parent::getFieldTypeResolverClass($objectTypeResolver, $fieldName);
