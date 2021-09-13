@@ -31,14 +31,14 @@ class LocationPostUserObjectTypeFieldResolver extends AbstractLocationPostObject
      */
     protected function getQuery(
         ObjectTypeResolverInterface $objectTypeResolver,
-        object $resultItem,
+        object $object,
         string $fieldName,
         array $fieldArgs = []
     ): array {
 
-        $query = parent::getQuery($objectTypeResolver, $resultItem, $fieldName, $fieldArgs);
+        $query = parent::getQuery($objectTypeResolver, $object, $fieldName, $fieldArgs);
 
-        $user = $resultItem;
+        $user = $object;
         switch ($fieldName) {
             case 'locationposts':
                 $query['authors'] = [$objectTypeResolver->getID($user)];

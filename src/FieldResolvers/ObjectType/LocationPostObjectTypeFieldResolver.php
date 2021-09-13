@@ -67,7 +67,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
      */
     public function resolveValue(
         ObjectTypeResolverInterface $objectTypeResolver,
-        object $resultItem,
+        object $object,
         string $fieldName,
         array $fieldArgs = [],
         ?array $variables = null,
@@ -75,7 +75,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
         array $options = []
     ): mixed {
         $taxonomyapi = TaxonomyTypeAPIFacade::getInstance();
-        $locationpost = $resultItem;
+        $locationpost = $object;
         switch ($fieldName) {
             case 'categories':
                 return $taxonomyapi->getCustomPostTaxonomyTerms(
@@ -96,7 +96,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
                 );
 
             case 'catName':
-                $cat = $objectTypeResolver->resolveValue($resultItem, 'mainCategory', $variables, $expressions, $options);
+                $cat = $objectTypeResolver->resolveValue($object, 'mainCategory', $variables, $expressions, $options);
                 if (GeneralUtils::isError($cat)) {
                     return $cat;
                 } elseif ($cat) {
@@ -105,6 +105,6 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
                 return null;
         }
 
-        return parent::resolveValue($objectTypeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
+        return parent::resolveValue($objectTypeResolver, $object, $fieldName, $fieldArgs, $variables, $expressions, $options);
     }
 }
