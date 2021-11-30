@@ -4,52 +4,37 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\FieldResolvers\ObjectType;
 
-use PoP\ComponentModel\Schema\SchemaDefinitionServiceInterface;
-use PoP\ComponentModel\Engine\EngineInterface;
 use EverythingElse\PoPSchema\Taxonomies\TypeAPIs\TaxonomyTypeAPIInterface;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractObjectTypeFieldResolver;
-use PoP\ComponentModel\HelperServices\SemverHelperServiceInterface;
-use PoP\ComponentModel\Instances\InstanceManagerInterface;
 use PoP\ComponentModel\Misc\GeneralUtils;
-use PoP\ComponentModel\Schema\FieldQueryInterpreterInterface;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoP\Engine\CMS\CMSServiceInterface;
 use PoP\Engine\TypeResolvers\ScalarType\StringScalarTypeResolver;
-use PoP\Hooks\HooksAPIInterface;
-use PoP\LooseContracts\NameResolverInterface;
-use PoP\Translation\TranslationAPIInterface;
 use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 
 class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
 {
-    public function __construct(
-        TranslationAPIInterface $translationAPI,
-        HooksAPIInterface $hooksAPI,
-        InstanceManagerInterface $instanceManager,
-        FieldQueryInterpreterInterface $fieldQueryInterpreter,
-        NameResolverInterface $nameResolver,
-        CMSServiceInterface $cmsService,
-        SemverHelperServiceInterface $semverHelperService,
-        SchemaDefinitionServiceInterface $schemaDefinitionService,
-        EngineInterface $engine,
-        protected StringScalarTypeResolver $stringScalarTypeResolver,
-        protected TaxonomyTypeAPIInterface $taxonomyAPI,
-    ) {
-        parent::__construct(
-            $translationAPI,
-            $hooksAPI,
-            $instanceManager,
-            $fieldQueryInterpreter,
-            $nameResolver,
-            $cmsService,
-            $semverHelperService,
-            $schemaDefinitionService,
-            $engine,
-        );
+    private ?StringScalarTypeResolver $stringScalarTypeResolver = null;
+    private ?TaxonomyTypeAPIInterface $taxonomyAPI = null;
+
+    final public function setStringScalarTypeResolver(StringScalarTypeResolver $stringScalarTypeResolver): void
+    {
+        $this->stringScalarTypeResolver = $stringScalarTypeResolver;
+    }
+    final protected function getStringScalarTypeResolver(): StringScalarTypeResolver
+    {
+        return $this->stringScalarTypeResolver ??= $this->instanceManager->getInstance(StringScalarTypeResolver::class);
+    }
+    final public function setTaxonomyTypeAPI(TaxonomyTypeAPIInterface $taxonomyAPI): void
+    {
+        $this->taxonomyAPI = $taxonomyAPI;
+    }
+    final protected function getTaxonomyTypeAPI(): TaxonomyTypeAPIInterface
+    {
+        return $this->taxonomyAPI ??= $this->instanceManager->getInstance(TaxonomyTypeAPIInterface::class);
     }
 
     public function getObjectTypeResolverClassesToAttachTo(): array
@@ -71,28 +56,28 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
     public function getFieldTypeResolver(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ConcreteTypeResolverInterface
     {
         return match ($fieldName) {
-            'catSlugs' => $this->stringScalarTypeResolver,
-            'catName' => $this->stringScalarTypeResolver,
+            'catSlugs' => $this->getStringScalarTypeResolver(),
+            'catName' => $this->getStringScalarTypeResolver(),
             default => parent::getFieldTypeResolver($objectTypeResolver, $fieldName),
         };
     }
 
-    public function getSchemaFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?int
+    public function getFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): int
     {
         return match ($fieldName) {
             'categories', 'catSlugs' => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY,
-            default => parent::getSchemaFieldTypeModifiers($objectTypeResolver, $fieldName),
+            default => parent::getFieldTypeModifiers($objectTypeResolver, $fieldName),
         };
     }
 
-    public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
+    public function getFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
-        $descriptions = [
-            'categories' => $this->translationAPI->__('', ''),
-            'catSlugs' => $this->translationAPI->__('', ''),
-            'catName' => $this->translationAPI->__('', ''),
-        ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
+        return match ($fieldName) {
+            'categories' => $this->getTranslationAPI()->__('', ''),
+            'catSlugs' => $this->getTranslationAPI()->__('', ''),
+            'catName' => $this->getTranslationAPI()->__('', ''),
+            default => parent::getFieldDescription($objectTypeResolver, $fieldName),
+        };
     }
 
     /**
@@ -105,7 +90,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
         ObjectTypeResolverInterface $objectTypeResolver,
         object $object,
         string $fieldName,
-        array $fieldArgs = [],
+        array $fieldArgs,
         ?array $variables = null,
         ?array $expressions = null,
         array $options = []
@@ -113,7 +98,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
         $locationpost = $object;
         switch ($fieldName) {
             case 'categories':
-                return $this->taxonomyAPI->getCustomPostTaxonomyTerms(
+                return $this->getTaxonomyAPI()->getCustomPostTaxonomyTerms(
                     $objectTypeResolver->getID($locationpost),
                     POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
                     [
@@ -122,7 +107,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
                 );
 
             case 'catSlugs':
-                return $this->taxonomyAPI->getCustomPostTaxonomyTerms(
+                return $this->getTaxonomyAPI()->getCustomPostTaxonomyTerms(
                     $objectTypeResolver->getID($locationpost),
                     POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
                     [
@@ -135,7 +120,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
                 if (GeneralUtils::isError($cat)) {
                     return $cat;
                 } elseif ($cat) {
-                    return $this->taxonomyAPI->getTermName($cat, POP_LOCATIONPOSTS_TAXONOMY_CATEGORY);
+                    return $this->getTaxonomyAPI()->getTermName($cat, POP_LOCATIONPOSTS_TAXONOMY_CATEGORY);
                 }
                 return null;
         }

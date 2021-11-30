@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts\Facades;
 
-use PoPSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
 use PoP\Root\Container\ContainerBuilderFactory;
+use PoPSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
 
 class LocationPostTypeAPIFacade
 {

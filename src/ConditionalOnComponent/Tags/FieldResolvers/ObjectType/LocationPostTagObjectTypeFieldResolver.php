@@ -20,12 +20,12 @@ abstract class LocationPostTagObjectTypeFieldResolver extends AbstractLocationPo
     //     return array(LocationTagTypeResolver::class);
     // }
 
-    public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
+    public function getFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
-        $descriptions = [
-            'locationposts' => $this->translationAPI->__('Location Posts which contain this tag', 'locationposts'),
-        ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
+        return match ($fieldName) {
+            'locationposts' => $this->getTranslationAPI()->__('Location Posts which contain this tag', 'locationposts'),
+            default => parent::getFieldDescription($objectTypeResolver, $fieldName),
+        };
     }
 
     /**
@@ -36,7 +36,7 @@ abstract class LocationPostTagObjectTypeFieldResolver extends AbstractLocationPo
         ObjectTypeResolverInterface $objectTypeResolver,
         object $object,
         string $fieldName,
-        array $fieldArgs = []
+        array $fieldArgs
     ): array {
 
         $query = parent::getQuery($objectTypeResolver, $object, $fieldName, $fieldArgs);

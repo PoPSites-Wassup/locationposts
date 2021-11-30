@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace PoPSchema\LocationPosts;
 
-use PoPSchema\LocationPosts\Environment;
 use PoP\Root\Component\AbstractComponent;
-use PoPSchema\Users\Component as UsersComponent;
 use PoPSchema\Tags\Component as TagsComponent;
+use PoPSchema\Users\Component as UsersComponent;
 
 /**
  * Initialize component
