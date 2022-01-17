@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\Facades;
+namespace PoPCMSSchema\LocationPosts\Facades;
 
-use PoP\Root\Container\ContainerBuilderFactory;
-use PoPSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
+use PoP\Root\App;
+use PoPCMSSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
 
 class LocationPostTypeAPIFacade
 {
@@ -14,7 +14,7 @@ class LocationPostTypeAPIFacade
         /**
          * @var LocationPostTypeAPIInterface
          */
-        $service = ContainerBuilderFactory::getInstance()->get(LocationPostTypeAPIInterface::class);
+        $service = App::getContainer()->get(LocationPostTypeAPIInterface::class);
         return $service;
     }
 }

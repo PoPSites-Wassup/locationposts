@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts;
+namespace PoPCMSSchema\LocationPosts;
 
 use PoP\Root\Component\AbstractComponent;
-use PoPSchema\Tags\Component as TagsComponent;
-use PoPSchema\Users\Component as UsersComponent;
+use PoPCMSSchema\Tags\Component as TagsComponent;
+use PoPCMSSchema\Users\Component as UsersComponent;
 
 /**
  * Initialize component
@@ -18,51 +18,49 @@ class Component extends AbstractComponent
      *
      * @return string[]
      */
-    public static function getDependedComponentClasses(): array
+    public function getDependedComponentClasses(): array
     {
         return [
-            \PoPSchema\Posts\Component::class,
+            \PoPCMSSchema\Posts\Component::class,
         ];
     }
 
     /**
      * All conditional component classes that this component depends upon, to initialize them
      */
-    public static function getDependedConditionalComponentClasses(): array
+    public function getDependedConditionalComponentClasses(): array
     {
         return [
-            \PoPSchema\Users\Component::class,
-            \PoPSchema\Tags\Component::class,
+            \PoPCMSSchema\Users\Component::class,
+            \PoPCMSSchema\Tags\Component::class,
         ];
     }
 
     /**
      * Initialize services
      *
-     * @param array<string, mixed> $configuration
      * @param string[] $skipSchemaComponentClasses
      */
-    protected static function initializeContainerServices(
-        array $configuration = [],
-        bool $skipSchema = false,
-        array $skipSchemaComponentClasses = []
+    protected function initializeContainerServices(
+        bool $skipSchema,
+        array $skipSchemaComponentClasses,
     ): void {
-        self::initSchemaServices(dirname(__DIR__), $skipSchema);
+        $this->initSchemaServices(dirname(__DIR__), $skipSchema);
 
         if (Environment::addLocationPostTypeToCustomPostUnionTypes()) {
-            self::initSchemaServices(dirname(__DIR__), $skipSchema, '/ConditionalOnContext/AddLocationPostTypeToCustomPostUnionTypes');
+            $this->initSchemaServices(dirname(__DIR__), $skipSchema, '/ConditionalOnContext/AddLocationPostTypeToCustomPostUnionTypes');
         }
 
         if (class_exists(TagsComponent::class)) {
-            self::initSchemaServices(
+            $this->initSchemaServices(
                 dirname(__DIR__),
-                $skipSchema || in_array(\PoPSchema\Tags\Component::class, $skipSchemaComponentClasses),
+                $skipSchema || in_array(\PoPCMSSchema\Tags\Component::class, $skipSchemaComponentClasses),
                 '/ConditionalOnComponent/Tags'
             );
         }
 
         if (class_exists(UsersComponent::class)) {
-            self::initSchemaServices(
+            $this->initSchemaServices(
                 dirname(__DIR__),
                 $skipSchema || in_array(UsersComponent::class, $skipSchemaComponentClasses),
                 '/ConditionalOnComponent/Users'

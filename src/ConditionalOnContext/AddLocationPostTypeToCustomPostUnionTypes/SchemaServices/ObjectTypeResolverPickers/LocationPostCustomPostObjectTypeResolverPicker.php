@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\ConditionalOnContext\AddLocationPostTypeToCustomPostUnionTypes\SchemaServices\ObjectTypeResolverPickers;
+namespace PoPCMSSchema\LocationPosts\ConditionalOnContext\AddLocationPostTypeToCustomPostUnionTypes\SchemaServices\ObjectTypeResolverPickers;
 
-use PoPSchema\CustomPosts\TypeResolvers\UnionType\CustomPostUnionTypeResolver;
-use PoPSchema\LocationPosts\ObjectTypeResolverPickers\AbstractLocationPostObjectTypeResolverPicker;
+use PoPCMSSchema\CustomPosts\TypeResolvers\UnionType\CustomPostUnionTypeResolver;
+use PoPCMSSchema\LocationPosts\ObjectTypeResolverPickers\AbstractLocationPostObjectTypeResolverPicker;
 
 class LocationPostCustomPostObjectTypeResolverPicker extends AbstractLocationPostObjectTypeResolverPicker
 {

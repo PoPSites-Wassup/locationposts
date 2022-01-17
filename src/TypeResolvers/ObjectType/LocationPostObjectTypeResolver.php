@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\TypeResolvers\ObjectType;
+namespace PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType;
 
 use PoP\ComponentModel\RelationalTypeDataLoaders\RelationalTypeDataLoaderInterface;
-use PoPSchema\LocationPosts\Environment;
-use PoPSchema\LocationPosts\RelationalTypeDataLoaders\ObjectType\LocationPostTypeDataLoader;
-use PoPSchema\Posts\TypeResolvers\ObjectType\PostObjectTypeResolver;
+use PoPCMSSchema\LocationPosts\Environment;
+use PoPCMSSchema\LocationPosts\RelationalTypeDataLoaders\ObjectType\LocationPostTypeDataLoader;
+use PoPCMSSchema\Posts\TypeResolvers\ObjectType\PostObjectTypeResolver;
 
 class LocationPostObjectTypeResolver extends PostObjectTypeResolver
 {
@@ -34,7 +34,7 @@ class LocationPostObjectTypeResolver extends PostObjectTypeResolver
 
     public function getTypeDescription(): ?string
     {
-        return $this->getTranslationAPI()->__('A post which has locations', 'locationposts');
+        return $this->__('A post which has locations', 'locationposts');
     }
 
     public function getRelationalTypeDataLoader(): RelationalTypeDataLoaderInterface

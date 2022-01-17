@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers\ObjectType;
+namespace PoPCMSSchema\LocationPosts\ConditionalOnComponent\Tags\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostObjectTypeFieldResolver;
+use PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostObjectTypeFieldResolver;
 
 /**
  * Fields for event tags
@@ -23,7 +23,7 @@ abstract class LocationPostTagObjectTypeFieldResolver extends AbstractLocationPo
     public function getFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         return match ($fieldName) {
-            'locationposts' => $this->getTranslationAPI()->__('Location Posts which contain this tag', 'locationposts'),
+            'locationposts' => $this->__('Location Posts which contain this tag', 'locationposts'),
             default => parent::getFieldDescription($objectTypeResolver, $fieldName),
         };
     }

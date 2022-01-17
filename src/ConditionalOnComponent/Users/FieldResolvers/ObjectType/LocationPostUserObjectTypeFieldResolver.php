@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\ConditionalOnComponent\Users\FieldResolvers\ObjectType;
+namespace PoPCMSSchema\LocationPosts\ConditionalOnComponent\Users\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostObjectTypeFieldResolver;
-use PoPSchema\Users\TypeResolvers\ObjectType\UserObjectTypeResolver;
+use PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType\AbstractLocationPostObjectTypeFieldResolver;
+use PoPCMSSchema\Users\TypeResolvers\ObjectType\UserObjectTypeResolver;
 
 class LocationPostUserObjectTypeFieldResolver extends AbstractLocationPostObjectTypeFieldResolver
 {
@@ -20,7 +20,7 @@ class LocationPostUserObjectTypeFieldResolver extends AbstractLocationPostObject
     public function getFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         return match ($fieldName) {
-            'locationposts' => $this->getTranslationAPI()->__('Location Posts by the user', 'locationposts'),
+            'locationposts' => $this->__('Location Posts by the user', 'locationposts'),
             default => parent::getFieldDescription($objectTypeResolver, $fieldName),
         };
     }

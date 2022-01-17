@@ -2,51 +2,36 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts;
+namespace PoPCMSSchema\LocationPosts;
 
-use PoP\ComponentModel\ComponentConfiguration\ComponentConfigurationTrait;
-use PoP\ComponentModel\ComponentConfiguration\EnvironmentValueHelpers;
+use PoP\Root\Component\AbstractComponentConfiguration;
+use PoP\Root\Component\EnvironmentValueHelpers;
 
-class ComponentConfiguration
+class ComponentConfiguration extends AbstractComponentConfiguration
 {
-    use ComponentConfigurationTrait;
-
-    private static ?int $getLocationPostListDefaultLimit = 10;
-    private static ?int $getLocationPostListMaxLimit = -1;
-
-    public static function getLocationPostListDefaultLimit(): ?int
+    public function getLocationPostListDefaultLimit(): ?int
     {
-        // Define properties
         $envVariable = Environment::LOCATIONPOST_LIST_DEFAULT_LIMIT;
-        $selfProperty = &self::$getLocationPostListDefaultLimit;
         $defaultValue = 10;
         $callback = [EnvironmentValueHelpers::class, 'toInt'];
 
-        // Initialize property from the environment/hook
-        self::maybeInitializeConfigurationValue(
+        return $this->retrieveConfigurationValueOrUseDefault(
             $envVariable,
-            $selfProperty,
             $defaultValue,
-            $callback
+            $callback,
         );
-        return $selfProperty;
     }
 
-    public static function getLocationPostListMaxLimit(): ?int
+    public function getLocationPostListMaxLimit(): ?int
     {
-        // Define properties
         $envVariable = Environment::LOCATIONPOST_LIST_MAX_LIMIT;
-        $selfProperty = &self::$getLocationPostListMaxLimit;
         $defaultValue = -1; // Unlimited
         $callback = [EnvironmentValueHelpers::class, 'toInt'];
 
-        // Initialize property from the environment/hook
-        self::maybeInitializeConfigurationValue(
+        return $this->retrieveConfigurationValueOrUseDefault(
             $envVariable,
-            $selfProperty,
             $defaultValue,
-            $callback
+            $callback,
         );
-        return $selfProperty;
     }
 }

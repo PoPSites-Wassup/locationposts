@@ -1,18 +1,12 @@
 <?php
 
-namespace PoPSchema\LocationPosts;
+namespace PoPCMSSchema\LocationPosts;
 
-use PHPUnit\Framework\TestCase;
+use PoP\Root\AbstractComponentTest;
 
-class ComponentTest extends TestCase
+/**
+ * Made abstract to disable the test
+ */
+abstract class ComponentTest extends AbstractComponentTest
 {
-    /**
-     * The component must have some dependency (only the root has not)
-     */
-    public function testHasDependedComponentClasses(): void
-    {
-        $this->assertNotEmpty(
-            Component::getDependedComponentClasses()
-        );
-    }
 }

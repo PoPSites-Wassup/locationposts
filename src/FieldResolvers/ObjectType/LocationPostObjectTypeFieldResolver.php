@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\FieldResolvers\ObjectType;
+namespace PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType;
 
-use EverythingElse\PoPSchema\Taxonomies\TypeAPIs\TaxonomyTypeAPIInterface;
+use EverythingElse\PoPCMSSchema\Taxonomies\TypeAPIs\TaxonomyTypeAPIInterface;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractObjectTypeFieldResolver;
 use PoP\ComponentModel\Misc\GeneralUtils;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoP\Engine\TypeResolvers\ScalarType\StringScalarTypeResolver;
-use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
+use PoP\ComponentModel\TypeResolvers\ScalarType\StringScalarTypeResolver;
+use PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
-use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
+use PoPCMSSchema\SchemaCommons\DataLoading\ReturnTypes;
 
 class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
 {
@@ -56,26 +56,31 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
     public function getFieldTypeResolver(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ConcreteTypeResolverInterface
     {
         return match ($fieldName) {
-            'catSlugs' => $this->getStringScalarTypeResolver(),
-            'catName' => $this->getStringScalarTypeResolver(),
-            default => parent::getFieldTypeResolver($objectTypeResolver, $fieldName),
+            'catSlugs',
+            'catName'
+                => $this->getStringScalarTypeResolver(),
+            default
+                => parent::getFieldTypeResolver($objectTypeResolver, $fieldName),
         };
     }
 
     public function getFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): int
     {
         return match ($fieldName) {
-            'categories', 'catSlugs' => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY,
-            default => parent::getFieldTypeModifiers($objectTypeResolver, $fieldName),
+            'categories',
+            'catSlugs'
+                => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY | SchemaTypeModifiers::IS_NON_NULLABLE_ITEMS_IN_ARRAY,
+            default
+                => parent::getFieldTypeModifiers($objectTypeResolver, $fieldName),
         };
     }
 
     public function getFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         return match ($fieldName) {
-            'categories' => $this->getTranslationAPI()->__('', ''),
-            'catSlugs' => $this->getTranslationAPI()->__('', ''),
-            'catName' => $this->getTranslationAPI()->__('', ''),
+            'categories' => $this->__('', ''),
+            'catSlugs' => $this->__('', ''),
+            'catName' => $this->__('', ''),
             default => parent::getFieldDescription($objectTypeResolver, $fieldName),
         };
     }

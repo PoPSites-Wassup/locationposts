@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\LocationPosts\FieldResolvers\ObjectType;
+namespace PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType;
 
+use PoP\Root\App;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPSchema\LocationPosts\ComponentConfiguration;
-use PoPSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
-use PoPSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
+use PoPCMSSchema\LocationPosts\Component;
+use PoPCMSSchema\LocationPosts\ComponentConfiguration;
+use PoPCMSSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
+use PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
-use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
+use PoPCMSSchema\SchemaCommons\DataLoading\ReturnTypes;
 
 abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolver
 {
@@ -46,7 +48,7 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     public function getFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): int
     {
         return match ($fieldName) {
-            'locationposts' => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY,
+            'locationposts' => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY | SchemaTypeModifiers::IS_NON_NULLABLE_ITEMS_IN_ARRAY,
             default => parent::getFieldTypeModifiers($objectTypeResolver, $fieldName),
         };
     }
@@ -54,7 +56,7 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     public function getFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         return match ($fieldName) {
-            'locationposts' => $this->getTranslationAPI()->__('Location Posts', 'locationposts'),
+            'locationposts' => $this->__('Location Posts', 'locationposts'),
             default => parent::getFieldDescription($objectTypeResolver, $fieldName),
         };
     }
@@ -65,9 +67,11 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
      */
     protected function getQuery(ObjectTypeResolverInterface $objectTypeResolver, object $object, string $fieldName, array $fieldArgs): array
     {
+        /** @var ComponentConfiguration */
+        $componentConfiguration = App::getComponent(Component::class)->getConfiguration();
         return match ($fieldName) {
             'locationposts' => [
-                'limit' => ComponentConfiguration::getLocationPostListDefaultLimit(),
+                'limit' => $componentConfiguration->getLocationPostListDefaultLimit(),
             ],
             default => [],
         };

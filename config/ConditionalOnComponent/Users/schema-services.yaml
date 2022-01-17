@@ -3,5 +3,5 @@ services:
         public: true
         autowire: true
 
-    PoPSchema\LocationPosts\ConditionalOnComponent\Users\FieldResolvers\:
+    PoPCMSSchema\LocationPosts\ConditionalOnComponent\Users\FieldResolvers\:
         resource: '../../../src/ConditionalOnComponent/Users/FieldResolvers/*'
