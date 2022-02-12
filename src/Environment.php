@@ -18,6 +18,6 @@ class Environment
     }
     public static function addLocationPostTypeToCustomPostUnionTypes(): bool
     {
-        return getenv('ADD_LOCATIONPOST_TYPE_TO_CUSTOMPOST_UNION_TYPES') !== false ? strtolower(getenv('ADD_LOCATIONPOST_TYPE_TO_CUSTOMPOST_UNION_TYPES')) == "true" : false;
+        return getenv('ADD_LOCATIONPOST_TYPE_TO_CUSTOMPOST_UNION_TYPES') !== false ? strtolower(getenv('ADD_LOCATIONPOST_TYPE_TO_CUSTOMPOST_UNION_TYPES')) === "true" : false;
     }
 }
