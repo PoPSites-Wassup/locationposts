@@ -7,7 +7,6 @@ namespace PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType;
 use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use EverythingElse\PoPCMSSchema\Taxonomies\TypeAPIs\TaxonomyTypeAPIInterface;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractObjectTypeFieldResolver;
-use PoP\ComponentModel\Misc\GeneralUtils;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
@@ -124,7 +123,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
 
             case 'catName':
                 $cat = $objectTypeResolver->resolveValue($object, 'mainCategory', $variables, $expressions, $objectTypeFieldResolutionFeedbackStore, $options);
-                if (GeneralUtils::isError($cat)) {
+                if ($objectTypeFieldResolutionFeedbackStore->getErrors() !== []) {
                     return $cat;
                 } elseif ($cat) {
                     return $this->getTaxonomyAPI()->getTermName($cat, POP_LOCATIONPOSTS_TAXONOMY_CATEGORY);
