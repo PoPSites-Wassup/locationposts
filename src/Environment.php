@@ -6,8 +6,8 @@ namespace PoPCMSSchema\LocationPosts;
 
 class Environment
 {
-    public const LOCATIONPOST_LIST_DEFAULT_LIMIT = 'LOCATIONPOST_LIST_DEFAULT_LIMIT';
-    public const LOCATIONPOST_LIST_MAX_LIMIT = 'LOCATIONPOST_LIST_MAX_LIMIT';
+    public final const LOCATIONPOST_LIST_DEFAULT_LIMIT = 'LOCATIONPOST_LIST_DEFAULT_LIMIT';
+    public final const LOCATIONPOST_LIST_MAX_LIMIT = 'LOCATIONPOST_LIST_MAX_LIMIT';
 
     /**
      * Customize the Location Post type name
