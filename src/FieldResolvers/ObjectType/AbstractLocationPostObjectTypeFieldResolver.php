@@ -10,8 +10,8 @@ use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFiel
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPCMSSchema\LocationPosts\Component;
-use PoPCMSSchema\LocationPosts\ComponentConfiguration;
+use PoPCMSSchema\LocationPosts\Module;
+use PoPCMSSchema\LocationPosts\ModuleConfiguration;
 use PoPCMSSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
 use PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
@@ -68,11 +68,11 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
      */
     protected function getQuery(ObjectTypeResolverInterface $objectTypeResolver, object $object, string $fieldName, array $fieldArgs): array
     {
-        /** @var ComponentConfiguration */
-        $componentConfiguration = App::getComponent(Component::class)->getConfiguration();
+        /** @var ModuleConfiguration */
+        $moduleConfiguration = App::getModule(Module::class)->getConfiguration();
         return match ($fieldName) {
             'locationposts' => [
-                'limit' => $componentConfiguration->getLocationPostListDefaultLimit(),
+                'limit' => $moduleConfiguration->getLocationPostListDefaultLimit(),
             ],
             default => [],
         };
