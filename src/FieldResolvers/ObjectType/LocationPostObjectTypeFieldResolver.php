@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType;
 
-use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use EverythingElse\PoPCMSSchema\Taxonomies\TypeAPIs\TaxonomyTypeAPIInterface;
+use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractObjectTypeFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ScalarType\StringScalarTypeResolver;
+use PoP\GraphQLParser\Spec\Parser\Ast\LeafField;
 use PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
-use PoPSchema\SchemaCommons\Constants\QueryOptions;
 use PoPCMSSchema\SchemaCommons\DataLoading\ReturnTypes;
+use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
 class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
 {
@@ -98,6 +99,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
         array $fieldArgs,
         array $variables,
         array $expressions,
+        \PoP\GraphQLParser\Spec\Parser\Ast\FieldInterface $field,
         ObjectTypeFieldResolutionFeedbackStore $objectTypeFieldResolutionFeedbackStore,
         array $options = []
     ): mixed {
@@ -122,7 +124,20 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
                 );
 
             case 'catName':
-                $cat = $objectTypeResolver->resolveValue($object, 'mainCategory', $variables, $expressions, $objectTypeFieldResolutionFeedbackStore, $options);
+                $cat = $objectTypeResolver->resolveValue(
+                    $object,
+                    new LeafField(
+                        'mainCategory',
+                        null,
+                        [],
+                        [],
+                        $field->getLocation()
+                    ),
+                    $variables,
+                    $expressions,
+                    $objectTypeFieldResolutionFeedbackStore,
+                    $options
+                );
                 if ($objectTypeFieldResolutionFeedbackStore->getErrors() !== []) {
                     return $cat;
                 } elseif ($cat) {
@@ -131,6 +146,6 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
                 return null;
         }
 
-        return parent::resolveValue($objectTypeResolver, $object, $fieldName, $fieldArgs, $variables, $expressions, $objectTypeFieldResolutionFeedbackStore, $options);
+        return parent::resolveValue($objectTypeResolver, $object, $fieldName, $fieldArgs, $variables, $expressions, $field, $objectTypeFieldResolutionFeedbackStore, $options);
     }
 }

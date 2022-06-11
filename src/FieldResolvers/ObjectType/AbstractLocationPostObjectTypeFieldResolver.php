@@ -91,6 +91,7 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
         array $fieldArgs,
         array $variables,
         array $expressions,
+        \PoP\GraphQLParser\Spec\Parser\Ast\FieldInterface $field,
         ObjectTypeFieldResolutionFeedbackStore $objectTypeFieldResolutionFeedbackStore,
         array $options = []
     ): mixed {
@@ -103,7 +104,7 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
                 return $this->getLocationPostTypeAPI()->getLocationPosts($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS]);
         }
 
-        return parent::resolveValue($objectTypeResolver, $object, $fieldName, $fieldArgs, $variables, $expressions, $objectTypeFieldResolutionFeedbackStore, $options);
+        return parent::resolveValue($objectTypeResolver, $object, $fieldName, $fieldArgs, $variables, $expressions, $field, $objectTypeFieldResolutionFeedbackStore, $options);
     }
 
     public function getFieldTypeResolver(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ConcreteTypeResolverInterface
