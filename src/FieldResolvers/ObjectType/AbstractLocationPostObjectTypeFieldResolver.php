@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType;
 
+use PoP\ComponentModel\QueryResolution\FieldDataAccessorInterface;
 use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoP\GraphQLParser\Spec\Parser\Ast\FieldInterface;
 use PoP\Root\App;
 use PoPCMSSchema\LocationPosts\Module;
 use PoPCMSSchema\LocationPosts\ModuleConfiguration;
@@ -69,11 +69,11 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     protected function getQuery(
         ObjectTypeResolverInterface $objectTypeResolver,
         object $object,
-        FieldInterface $field,
+        FieldDataAccessorInterface $fieldDataAccessor,
     ): array {
         /** @var ModuleConfiguration */
         $moduleConfiguration = App::getModule(Module::class)->getConfiguration();
-        return match ($field->getName()) {
+        return match ($fieldDataAccessor->getFieldName()) {
             'locationposts' => [
                 'limit' => $moduleConfiguration->getLocationPostListDefaultLimit(),
             ],
@@ -84,19 +84,19 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     public function resolveValue(
         ObjectTypeResolverInterface $objectTypeResolver,
         object $object,
-        FieldInterface $field,
+        FieldDataAccessorInterface $fieldDataAccessor,
         ObjectTypeFieldResolutionFeedbackStore $objectTypeFieldResolutionFeedbackStore,
     ): mixed {
-        switch ($field->getName()) {
+        switch ($fieldDataAccessor->getFieldName()) {
             case 'locationposts':
                 $query = array_merge(
-                    $this->convertFieldArgsToFilteringQueryArgs($objectTypeResolver, $field),
-                    $this->getQuery($objectTypeResolver, $object, $field)
+                    $this->convertFieldArgsToFilteringQueryArgs($objectTypeResolver, $fieldDataAccessor),
+                    $this->getQuery($objectTypeResolver, $object, $fieldDataAccessor)
                 );
                 return $this->getLocationPostTypeAPI()->getLocationPosts($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS]);
         }
 
-        return parent::resolveValue($objectTypeResolver, $object, $field, $objectTypeFieldResolutionFeedbackStore);
+        return parent::resolveValue($objectTypeResolver, $object, $fieldDataAccessor, $objectTypeFieldResolutionFeedbackStore);
     }
 
     public function getFieldTypeResolver(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ConcreteTypeResolverInterface
