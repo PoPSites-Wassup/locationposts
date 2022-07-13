@@ -41,7 +41,7 @@ abstract class AbstractLocationPostObjectTypeResolverPicker extends AbstractObje
         return $this->getLocationPostTypeAPI()->isInstanceOfLocationPostType($object);
     }
 
-    public function isIDOfType(string | int $objectID): bool
+    public function isIDOfType(string|int $objectID): bool
     {
         return $this->getLocationPostTypeAPI()->locationPostExists($objectID);
     }
