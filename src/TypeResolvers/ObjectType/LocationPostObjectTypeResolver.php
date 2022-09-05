@@ -21,6 +21,7 @@ class LocationPostObjectTypeResolver extends PostObjectTypeResolver
     }
     final protected function getLocationPostTypeDataLoader(): LocationPostTypeDataLoader
     {
+        /** @var LocationPostTypeDataLoader */
         return $this->locationPostTypeDataLoader ??= $this->instanceManager->getInstance(LocationPostTypeDataLoader::class);
     }
 

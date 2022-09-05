@@ -9,6 +9,9 @@ use PoP\Engine\TypeResolvers\ObjectType\RootObjectTypeResolver;
 
 class RootLocationPostObjectTypeFieldResolver extends AbstractLocationPostObjectTypeFieldResolver
 {
+    /**
+     * @return array<class-string<ObjectTypeResolverInterface>>
+     */
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [

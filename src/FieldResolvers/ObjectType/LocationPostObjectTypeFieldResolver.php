@@ -28,6 +28,7 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
     }
     final protected function getStringScalarTypeResolver(): StringScalarTypeResolver
     {
+        /** @var StringScalarTypeResolver */
         return $this->stringScalarTypeResolver ??= $this->instanceManager->getInstance(StringScalarTypeResolver::class);
     }
     final public function setTaxonomyTypeAPI(TaxonomyTypeAPIInterface $taxonomyAPI): void
@@ -36,9 +37,13 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
     }
     final protected function getTaxonomyTypeAPI(): TaxonomyTypeAPIInterface
     {
+        /** @var TaxonomyTypeAPIInterface */
         return $this->taxonomyAPI ??= $this->instanceManager->getInstance(TaxonomyTypeAPIInterface::class);
     }
 
+    /**
+     * @return array<class-string<ObjectTypeResolverInterface>>
+     */
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [
@@ -46,6 +51,9 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function getFieldNamesToResolve(): array
     {
         return [

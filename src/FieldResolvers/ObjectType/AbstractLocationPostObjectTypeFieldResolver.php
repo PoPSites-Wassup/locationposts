@@ -29,6 +29,7 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     }
     final protected function getLocationPostObjectTypeResolver(): LocationPostObjectTypeResolver
     {
+        /** @var LocationPostObjectTypeResolver */
         return $this->locationPostObjectTypeResolver ??= $this->instanceManager->getInstance(LocationPostObjectTypeResolver::class);
     }
     final public function setLocationPostTypeAPI(LocationPostTypeAPIInterface $locationPostTypeAPI): void
@@ -37,9 +38,13 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     }
     final protected function getLocationPostTypeAPI(): LocationPostTypeAPIInterface
     {
+        /** @var LocationPostTypeAPIInterface */
         return $this->locationPostTypeAPI ??= $this->instanceManager->getInstance(LocationPostTypeAPIInterface::class);
     }
 
+    /**
+     * @return string[]
+     */
     public function getFieldNamesToResolve(): array
     {
         return [
@@ -64,7 +69,7 @@ abstract class AbstractLocationPostObjectTypeFieldResolver extends AbstractQuery
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string,mixed>
      */
     protected function getQuery(
         ObjectTypeResolverInterface $objectTypeResolver,

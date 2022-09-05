@@ -17,10 +17,16 @@ class LocationPostTypeDataLoader extends PostTypeDataLoader
     }
     final protected function getLocationPostTypeAPI(): LocationPostTypeAPIInterface
     {
+        /** @var LocationPostTypeAPIInterface */
         return $this->locationPostTypeAPI ??= $this->instanceManager->getInstance(LocationPostTypeAPIInterface::class);
     }
 
-    public function executeQuery($query, array $options = []): array
+    /**
+     * @return mixed[]
+     * @param array<string,mixed> $query
+     * @param array<string,mixed> $options
+     */
+    public function executeQuery(array $query, array $options = []): array
     {
         return $this->getLocationPostTypeAPI()->getLocationPosts($query, $options);
     }

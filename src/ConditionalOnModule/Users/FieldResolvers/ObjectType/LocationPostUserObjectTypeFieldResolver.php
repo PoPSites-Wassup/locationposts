@@ -11,6 +11,9 @@ use PoPCMSSchema\Users\TypeResolvers\ObjectType\UserObjectTypeResolver;
 
 class LocationPostUserObjectTypeFieldResolver extends AbstractLocationPostObjectTypeFieldResolver
 {
+    /**
+     * @return array<class-string<ObjectTypeResolverInterface>>
+     */
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [
@@ -27,7 +30,7 @@ class LocationPostUserObjectTypeFieldResolver extends AbstractLocationPostObject
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string,mixed>
      */
     protected function getQuery(
         ObjectTypeResolverInterface $objectTypeResolver,

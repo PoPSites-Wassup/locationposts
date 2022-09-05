@@ -24,6 +24,10 @@ interface LocationPostTypeAPIInterface
     /**
      * Get the locationPost with provided ID or, if it doesn't exist, null.
      * If param "status" in $query is not passed, it defaults to "publish"
+     *
+     * @return array<string|int>|object[]
+     * @param array<string,mixed> $query
+     * @param array<string,mixed> $options
      */
     public function getLocationPosts(array $query, array $options = []): array;
 }

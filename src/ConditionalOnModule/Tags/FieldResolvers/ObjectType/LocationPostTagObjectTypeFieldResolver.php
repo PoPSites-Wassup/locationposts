@@ -30,7 +30,7 @@ abstract class LocationPostTagObjectTypeFieldResolver extends AbstractLocationPo
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string,mixed>
      */
     protected function getQuery(
         ObjectTypeResolverInterface $objectTypeResolver,

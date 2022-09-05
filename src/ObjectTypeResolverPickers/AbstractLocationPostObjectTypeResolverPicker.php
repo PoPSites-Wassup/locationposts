@@ -20,6 +20,7 @@ abstract class AbstractLocationPostObjectTypeResolverPicker extends AbstractObje
     }
     final protected function getLocationPostObjectTypeResolver(): LocationPostObjectTypeResolver
     {
+        /** @var LocationPostObjectTypeResolver */
         return $this->locationPostObjectTypeResolver ??= $this->instanceManager->getInstance(LocationPostObjectTypeResolver::class);
     }
     final public function setLocationPostTypeAPI(LocationPostTypeAPIInterface $locationPostTypeAPI): void
@@ -28,6 +29,7 @@ abstract class AbstractLocationPostObjectTypeResolverPicker extends AbstractObje
     }
     final protected function getLocationPostTypeAPI(): LocationPostTypeAPIInterface
     {
+        /** @var LocationPostTypeAPIInterface */
         return $this->locationPostTypeAPI ??= $this->instanceManager->getInstance(LocationPostTypeAPIInterface::class);
     }
 
