@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PoPCMSSchema\LocationPosts;
 
 use PoP\Root\AbstractModuleTest;
