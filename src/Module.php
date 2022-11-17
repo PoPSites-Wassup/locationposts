@@ -43,10 +43,6 @@ class Module extends AbstractModule
     ): void {
         $this->initSchemaServices(dirname(__DIR__), $skipSchema);
 
-        if (Environment::addLocationPostTypeToCustomPostUnionTypes()) {
-            $this->initSchemaServices(dirname(__DIR__), $skipSchema, '/ConditionalOnContext/AddLocationPostTypeToCustomPostUnionTypes');
-        }
-
         if (class_exists(TagsModule::class)) {
             $this->initSchemaServices(
                 dirname(__DIR__),
