@@ -25,8 +25,8 @@
         "squizlabs/php_codesniffer": "^3.6"
     },
     "suggest": {
-        "pop-cms-schema/users": "Integrates well with Users",
-        "pop-cms-schema/tags": "Integrates well with Tags"
+        "pop-cms-schema/users": "Integration with Users",
+        "pop-cms-schema/tags": "Integration with Tags"
     },
     "conflict": {
         "getpop-pro/trace-tools": "<0.8.10",
