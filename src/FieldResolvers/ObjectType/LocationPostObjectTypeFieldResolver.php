@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\QueryResolution\FieldDataAccessorInterface;
-use EverythingElse\PoPCMSSchema\Taxonomies\TypeAPIs\TaxonomyTypeAPIInterface;
+use EverythingElse\PoPCMSSchema\Taxonomies\TypeAPIs\TaxonomyTermTypeAPIInterface;
 use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractObjectTypeFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
@@ -20,7 +20,7 @@ use PoPSchema\SchemaCommons\Constants\QueryOptions;
 class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
 {
     private ?StringScalarTypeResolver $stringScalarTypeResolver = null;
-    private ?TaxonomyTypeAPIInterface $taxonomyAPI = null;
+    private ?TaxonomyTermTypeAPIInterface $taxonomyAPI = null;
 
     final public function setStringScalarTypeResolver(StringScalarTypeResolver $stringScalarTypeResolver): void
     {
@@ -31,14 +31,14 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
         /** @var StringScalarTypeResolver */
         return $this->stringScalarTypeResolver ??= $this->instanceManager->getInstance(StringScalarTypeResolver::class);
     }
-    final public function setTaxonomyTypeAPI(TaxonomyTypeAPIInterface $taxonomyAPI): void
+    final public function setTaxonomyTypeAPI(TaxonomyTermTypeAPIInterface $taxonomyAPI): void
     {
         $this->taxonomyAPI = $taxonomyAPI;
     }
-    final protected function getTaxonomyTypeAPI(): TaxonomyTypeAPIInterface
+    final protected function getTaxonomyTypeAPI(): TaxonomyTermTypeAPIInterface
     {
-        /** @var TaxonomyTypeAPIInterface */
-        return $this->taxonomyAPI ??= $this->instanceManager->getInstance(TaxonomyTypeAPIInterface::class);
+        /** @var TaxonomyTermTypeAPIInterface */
+        return $this->taxonomyAPI ??= $this->instanceManager->getInstance(TaxonomyTermTypeAPIInterface::class);
     }
 
     /**
