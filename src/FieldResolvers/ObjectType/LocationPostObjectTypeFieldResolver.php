@@ -4,23 +4,21 @@ declare(strict_types=1);
 
 namespace PoPCMSSchema\LocationPosts\FieldResolvers\ObjectType;
 
-use PoP\ComponentModel\QueryResolution\FieldDataAccessorInterface;
-use EverythingElse\PoPCMSSchema\Taxonomies\TypeAPIs\TaxonomyTermTypeAPIInterface;
+use PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
+use PoPCMSSchema\SchemaCommons\DataLoading\ReturnTypes;
+use PoPSchema\SchemaCommons\Constants\QueryOptions;
 use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractObjectTypeFieldResolver;
+use PoP\ComponentModel\QueryResolution\FieldDataAccessorInterface;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ScalarType\StringScalarTypeResolver;
 use PoP\GraphQLParser\Spec\Parser\Ast\LeafField;
-use PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType\LocationPostObjectTypeResolver;
-use PoPCMSSchema\SchemaCommons\DataLoading\ReturnTypes;
-use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
 class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolver
 {
     private ?StringScalarTypeResolver $stringScalarTypeResolver = null;
-    private ?TaxonomyTermTypeAPIInterface $taxonomyAPI = null;
 
     final public function setStringScalarTypeResolver(StringScalarTypeResolver $stringScalarTypeResolver): void
     {
@@ -30,15 +28,6 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
     {
         /** @var StringScalarTypeResolver */
         return $this->stringScalarTypeResolver ??= $this->instanceManager->getInstance(StringScalarTypeResolver::class);
-    }
-    final public function setTaxonomyTypeAPI(TaxonomyTermTypeAPIInterface $taxonomyAPI): void
-    {
-        $this->taxonomyAPI = $taxonomyAPI;
-    }
-    final protected function getTaxonomyTypeAPI(): TaxonomyTermTypeAPIInterface
-    {
-        /** @var TaxonomyTermTypeAPIInterface */
-        return $this->taxonomyAPI ??= $this->instanceManager->getInstance(TaxonomyTermTypeAPIInterface::class);
     }
 
     /**
@@ -104,22 +93,32 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
         $locationpost = $object;
         switch ($fieldDataAccessor->getFieldName()) {
             case 'categories':
-                return $this->getTaxonomyAPI()->getCustomPostTaxonomyTerms(
+                /**
+                 * @todo TaxonomyTypeAPI was removed! This stale code must be fixed
+                 */
+                return $this->getTaxonomyTypeAPI()->getCustomPostTaxonomyTerms(
                     $objectTypeResolver->getID($locationpost),
-                    POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
+                    [
+                        'taxonomy' => POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
+                    ],
                     [
                         QueryOptions::RETURN_TYPE => ReturnTypes::IDS,
                     ]
-                );
+                ) ?? [];
 
             case 'catSlugs':
-                return $this->getTaxonomyAPI()->getCustomPostTaxonomyTerms(
+                /**
+                 * @todo TaxonomyTypeAPI was removed! This stale code must be fixed
+                 */
+                return $this->getTaxonomyTypeAPI()->getCustomPostTaxonomyTerms(
                     $objectTypeResolver->getID($locationpost),
-                    POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
+                    [
+                        'taxonomy' => POP_LOCATIONPOSTS_TAXONOMY_CATEGORY,
+                    ],
                     [
                         QueryOptions::RETURN_TYPE => ReturnTypes::SLUGS,
                     ]
-                );
+                ) ?? [];
 
             case 'catName':
                 $cat = $objectTypeResolver->resolveValue(
@@ -136,7 +135,10 @@ class LocationPostObjectTypeFieldResolver extends AbstractObjectTypeFieldResolve
                 if ($objectTypeFieldResolutionFeedbackStore->getErrors() !== []) {
                     return $cat;
                 } elseif ($cat) {
-                    return $this->getTaxonomyAPI()->getTermName($cat, POP_LOCATIONPOSTS_TAXONOMY_CATEGORY);
+                    /**
+                     * @todo TaxonomyTypeAPI was removed! This stale code must be fixed
+                     */
+                    return $this->getTaxonomyTypeAPI()->getTermName($cat, POP_LOCATIONPOSTS_TAXONOMY_CATEGORY);
                 }
                 return null;
         }
