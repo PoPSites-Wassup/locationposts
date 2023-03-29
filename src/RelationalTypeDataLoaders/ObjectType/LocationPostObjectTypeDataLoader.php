@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace PoPCMSSchema\LocationPosts\RelationalTypeDataLoaders\ObjectType;
 
 use PoPCMSSchema\LocationPosts\TypeAPIs\LocationPostTypeAPIInterface;
-use PoPCMSSchema\Posts\RelationalTypeDataLoaders\ObjectType\PostTypeDataLoader;
+use PoPCMSSchema\Posts\RelationalTypeDataLoaders\ObjectType\PostObjectTypeDataLoader;
 
-class LocationPostTypeDataLoader extends PostTypeDataLoader
+class LocationPostObjectTypeDataLoader extends PostObjectTypeDataLoader
 {
     private ?LocationPostTypeAPIInterface $locationPostTypeAPI = null;
 

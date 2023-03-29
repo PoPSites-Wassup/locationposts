@@ -6,23 +6,23 @@ namespace PoPCMSSchema\LocationPosts\TypeResolvers\ObjectType;
 
 use PoP\ComponentModel\RelationalTypeDataLoaders\RelationalTypeDataLoaderInterface;
 use PoPCMSSchema\LocationPosts\Environment;
-use PoPCMSSchema\LocationPosts\RelationalTypeDataLoaders\ObjectType\LocationPostTypeDataLoader;
+use PoPCMSSchema\LocationPosts\RelationalTypeDataLoaders\ObjectType\LocationPostObjectTypeDataLoader;
 use PoPCMSSchema\Posts\TypeResolvers\ObjectType\PostObjectTypeResolver;
 
 class LocationPostObjectTypeResolver extends PostObjectTypeResolver
 {
     protected ?string $name = null;
 
-    private ?LocationPostTypeDataLoader $locationPostTypeDataLoader = null;
+    private ?LocationPostObjectTypeDataLoader $locationPostObjectTypeDataLoader = null;
 
-    final public function setLocationPostTypeDataLoader(LocationPostTypeDataLoader $locationPostTypeDataLoader): void
+    final public function setLocationPostObjectTypeDataLoader(LocationPostObjectTypeDataLoader $locationPostObjectTypeDataLoader): void
     {
-        $this->locationPostTypeDataLoader = $locationPostTypeDataLoader;
+        $this->locationPostObjectTypeDataLoader = $locationPostObjectTypeDataLoader;
     }
-    final protected function getLocationPostTypeDataLoader(): LocationPostTypeDataLoader
+    final protected function getLocationPostObjectTypeDataLoader(): LocationPostObjectTypeDataLoader
     {
-        /** @var LocationPostTypeDataLoader */
-        return $this->locationPostTypeDataLoader ??= $this->instanceManager->getInstance(LocationPostTypeDataLoader::class);
+        /** @var LocationPostObjectTypeDataLoader */
+        return $this->locationPostObjectTypeDataLoader ??= $this->instanceManager->getInstance(LocationPostObjectTypeDataLoader::class);
     }
 
     public function getTypeName(): string
@@ -40,6 +40,6 @@ class LocationPostObjectTypeResolver extends PostObjectTypeResolver
 
     public function getRelationalTypeDataLoader(): RelationalTypeDataLoaderInterface
     {
-        return $this->getLocationPostTypeDataLoader();
+        return $this->getLocationPostObjectTypeDataLoader();
     }
 }
