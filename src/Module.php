@@ -29,8 +29,8 @@ class Module extends AbstractModule
     public function getDependedConditionalModuleClasses(): array
     {
         return [
-            \PoPCMSSchema\Users\Module::class,
-            \PoPCMSSchema\Tags\Module::class,
+            UsersModule::class,
+            TagsModule::class,
         ];
     }
 
@@ -49,7 +49,7 @@ class Module extends AbstractModule
             if (class_exists(TagsModule::class) && App::getModule(TagsModule::class)->isEnabled()) {
                 $this->initSchemaServices(
                     dirname(__DIR__),
-                    $skipSchema || in_array(\PoPCMSSchema\Tags\Module::class, $skipSchemaModuleClasses),
+                    $skipSchema || in_array(TagsModule::class, $skipSchemaModuleClasses),
                     '/ConditionalOnModule/Tags'
                 );
             }
