@@ -42,7 +42,7 @@
         "pop-cms-schema-pro/locations": "<0.10.2",
         "pop-schema-pro/function-directives": "<0.10.2",
         "pop-cms-schema-pro/events": "<0.10.2",
-        "pop-schema-pro/directive-commons": "<0.10.2",
+        "pop-schema/directive-commons": "<0.10.2",
         "pop-schema-pro/cdn-directive": "<0.10.2",
         "graphql-by-pop-pro/remove-directive": "<0.10.2",
         "graphql-by-pop-pro/export-directive": "<0.10.2",
