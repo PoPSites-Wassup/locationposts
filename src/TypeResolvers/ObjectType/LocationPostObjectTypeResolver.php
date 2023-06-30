@@ -21,8 +21,12 @@ class LocationPostObjectTypeResolver extends PostObjectTypeResolver
     }
     final protected function getLocationPostObjectTypeDataLoader(): LocationPostObjectTypeDataLoader
     {
-        /** @var LocationPostObjectTypeDataLoader */
-        return $this->locationPostObjectTypeDataLoader ??= $this->instanceManager->getInstance(LocationPostObjectTypeDataLoader::class);
+        if ($this->locationPostObjectTypeDataLoader === null) {
+            /** @var LocationPostObjectTypeDataLoader */
+            $locationPostObjectTypeDataLoader = $this->instanceManager->getInstance(LocationPostObjectTypeDataLoader::class);
+            $this->locationPostObjectTypeDataLoader = $locationPostObjectTypeDataLoader;
+        }
+        return $this->locationPostObjectTypeDataLoader;
     }
 
     public function getTypeName(): string
