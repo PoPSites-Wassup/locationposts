@@ -2,7 +2,7 @@
     "name": "pop-cms-schema/locationposts",
     "type": "library",
     "description": "Adds support for locationposts",
-    "keywords": ["locationposts"],
+    "keywords": ["Gato", "locationposts"],
     "homepage": "https://github.com/PoPSchema/locationposts",
     "license": "GPL-2.0-or-later",
     "authors": [
